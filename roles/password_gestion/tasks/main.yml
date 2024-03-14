@@ -1,0 +1,7 @@
+- name: Password Management | Linux Tasks
+  include_tasks: password_linux.yml
+    #when: inventory_hostname in groups['Linux']
+
+- name: Password Management | Windows Tasks
+  include_tasks: password_windows.yml
+  when: inventory_hostname in groups['Windows']

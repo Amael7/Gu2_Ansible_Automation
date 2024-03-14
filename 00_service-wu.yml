@@ -1,0 +1,6 @@
+- name: "Run powershell script"
+  hosts: "windows"
+  gather_facts: "false"
+  tasks:
+    - name: "Start Windows Update"
+      script: "files/windows_update.ps1"

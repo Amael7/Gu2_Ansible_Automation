@@ -1,0 +1,11 @@
+- name: "SNMP Configuration"
+  hosts: 
+    - Linux
+    - Windows
+  gather_facts: False
+  remote_user: "{{'Administrateur' if inventory_hostname in groups['Windows'] else 'root'}}"
+  vars_files:
+    - vars/main.yml
+  roles:
+    - role: SNMP_configure
+      tags: [snmp]

@@ -1,0 +1,15 @@
+- name: Windows remove configuration
+  win_feature:
+    name: SNMP-Service
+    state: absent
+
+- name: Windows remove Centreon configuration
+  centreon_host:
+    url: "{{centreon_url}}"
+    username: "{{centreon_api_user}}"
+    password: "{{centreon_api_pass}}"
+    name: "{{centreon_name}}"
+    alias: "{{centreon_alias}}"
+    ipaddr: "{{ansible_host}}"
+    state: absent
+  delegate_to: Centreon

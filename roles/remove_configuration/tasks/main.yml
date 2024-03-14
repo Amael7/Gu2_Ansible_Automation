@@ -1,0 +1,7 @@
+- name: Remove Configuration | Linux Tasks
+  include_tasks: remove_cfg_linux.yml
+  when: inventory_hostname in groups['Linux']
+
+- name: Remove Configuration | Windows Tasks
+  include_tasks: remove_cfg_windows.yml
+  when: inventory_hostname in groups['Windows']

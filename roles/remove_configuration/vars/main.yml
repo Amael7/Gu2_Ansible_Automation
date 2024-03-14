@@ -1,0 +1,4 @@
+---
+centreon_url: http://10.0.4.2/centreon
+centreon_api_user: "admin"
+centreon_api_pass: "centreon"

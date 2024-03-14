@@ -1,0 +1,18 @@
+- name: Linux remove configuration 
+  apt:
+    name: "{{item}}"
+    state: absent
+  with_items:
+    - snmp
+    - snmpd
+
+- name: Linux remove Centreon configuration
+  centreon_host:
+    url: "{{centreon_url}}"
+    username: "{{centreon_api_user}}"
+    password: "{{centreon_api_pass}}"
+    name: "{{centreon_name}}"
+    alias: "{{centreon_alias}}"
+    ipaddr: "{{ansible_host}}"
+    state: absent
+  delegate_to: Centreon

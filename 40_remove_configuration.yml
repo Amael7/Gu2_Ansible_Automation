@@ -1,0 +1,12 @@
+- name: "Remove Configuration"
+  hosts: 
+    - Linux
+    - Windows
+    # - Centreon
+  remote_user: "{{'Administrateur' if inventory_hostname in groups['Windows'] else 'root'}}"
+  gather_facts: False
+  vars_files:
+    - vars/main.yml
+  roles:
+    - role: remove_configuration
+      tags: [remove]

@@ -1,0 +1,9 @@
+- name: Windows SNMP Installation
+  win_feature:
+    name: SNMP-Service
+    state: present
+- name: starting Windows SNMP Daemon service
+  win_service:
+    name: SNMP
+    start_mode: auto
+    state: started

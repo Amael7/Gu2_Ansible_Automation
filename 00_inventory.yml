@@ -1,0 +1,16 @@
+myhosts:
+  hosts:
+    linux:
+      centreon_alma_linux:
+        ansible_host: 10.0.4.2
+      debian_client:
+        ansible_host: 10.0.3.2
+    windows:
+      windows_server:
+        ansible_host: 10.0.4.4
+        ansible_user: administrateur
+        ansible_password: WinServer_2022A
+        ansible_port: 5986
+        ansible_connection: winrm
+        ansible_winrm_server_cert_validation: ignore
+
