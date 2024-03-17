@@ -1,0 +1,7 @@
+- handlers:
+    - name: "centreon api applycfg"
+      centreon_central:
+        url: "{{centreon_url}}"
+        username: "{{centreon_api_user}}"
+        password: "{{centreon_api_pass}}"
+      listen: "centreon api applycfg"

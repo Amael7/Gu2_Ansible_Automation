@@ -1,0 +1,7 @@
+- name: Centreon Supervision | Linux Tasks
+  include_tasks: centreon_supervision_linux.yml
+  when: inventory_hostname in groups['Linux']
+
+- name: Centreon Supervision | Windows Tasks
+  include_tasks: centreon_supervision_windows.yml
+  when: inventory_hostname in groups['Windows']

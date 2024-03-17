@@ -1,0 +1,14 @@
+[Windows]
+# Windows Server 2019
+10.0.4.4
+[Windows:vars]
+ansible_user=administrateur
+ansible_password=WinServer_2022A
+ansible_port = 5986
+ansible_connection=winrm
+ansible_winrm_server_cert_validation=ignore
+[Linux]
+# Alma Linux Centreon
+10.0.4.2
+# Debian Linux Client
+10.0.3.2

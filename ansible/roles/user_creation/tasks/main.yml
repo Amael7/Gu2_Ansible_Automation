@@ -1,0 +1,43 @@
+- name: Create User 
+  pause:
+    prompt: "Select a OS target "
+  register: result
+
+- name: Select the targetting OS
+  set_fact: 
+    target_os: "{{result.user_input}}" 
+
+- pause:
+    prompt: "Select an username "
+  register: result
+
+- name: Choose an username
+  set_fact: 
+    username: "{{result.user_input}}" 
+
+- name: Generate new random password
+  set_fact:
+    new_password: "\"{{lookup('community.general.random_string', length=18)}}\""
+
+- name: Create Linux User 
+  user: 
+    name: "{{username}}"
+    state: present
+    password: "{{new_password | password_hash('sha512')}}"
+  when: target_os == 'Linux'
+  delegate_to: 10.0.3.2
+
+- name: Create Windows User 
+  ansible.windows.win_user: 
+    name: "{{username}}"
+    state: present
+    password: "{{new_password}}"
+  when: target_os == 'Windows'
+  delegate_to: 10.0.4.4
+
+- name: Add User Credentials to CSV file
+  ansible.builtin.lineinfile:
+    path: "files/password_vault.csv"
+    line: "{{username}},{{new_password}},{{target_os}}"
+    state: present
+

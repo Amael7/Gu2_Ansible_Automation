@@ -1,0 +1,7 @@
+- name: SNMP Configuration | Linux Tasks
+  include_tasks: snmp_cfg_linux.yml
+  when: inventory_hostname in groups['Linux']
+
+- name: SNMP Configuration | Windows Tasks
+  include_tasks: snmp_cfg_windows.yml
+  when: inventory_hostname in groups['Windows']

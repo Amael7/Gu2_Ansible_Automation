@@ -1,0 +1,9 @@
+- name: "User Creation"
+  hosts: 
+    - localhost 
+  gather_facts: False
+  vars_files:
+    - vars/main.yml
+  roles:
+    - role: user_creation
+      tags: [user]
