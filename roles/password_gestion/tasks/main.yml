@@ -1,7 +1,66 @@
-- name: Password Management | Linux Tasks
-  include_tasks: password_linux.yml
-    #when: inventory_hostname in groups['Linux']
+- pause:
+    prompt: "Select a OS target "
+  register: result
 
-- name: Password Management | Windows Tasks
-  include_tasks: password_windows.yml
-  when: inventory_hostname in groups['Windows']
+- name: Select the targetting OS
+  set_fact: 
+    target_os: "{{result.user_input}}" 
+
+- name: Get CSV file
+  community.general.read_csv:
+    path: "files/password_vault.csv"
+  register: csv_file
+  
+- name: Display CSV rows
+  debug: 
+    msg: "Username: {{item.username}}, Password: {{item.password}}, OS: {{item.os}}"
+  loop: "{{csv_file.list}}"
+  loop_control:
+    loop_var: item
+  when: item.os == target_os
+
+- pause:
+    prompt: "Select an username to change the password "
+  register: result
+
+
+- name: Select the user
+  set_fact: 
+    username: "{{result.user_input}}" 
+
+- name: Generate new random password
+  set_fact:
+    new_password: "{{lookup('community.general.random_string', special=false, length=18, min_lower=1, min_upper=1, min_numeric=1)}}"
+
+- debug:
+    msg: "{{new_password}}"
+
+- name: Update password in CSV file
+  ansible.builtin.lineinfile:
+    path: "files/password_vault.csv"
+    regexp: "{{item.password}}"
+    line: "{{item.username}},{{new_password}},{{item.os}}"
+  loop: "{{csv_file.list}}"
+  loop_control:
+    loop_var: item
+  when: 
+    - item.username == username
+    - item.os == target_os
+
+- name: "change {{ username }}'s password for Linux"
+  become: yes
+  ansible.builtin.user:
+    name: "{{username}}"
+    state: present
+    password: "{{ new_password | password_hash('sha512') }}"
+    update_password: always
+  when: target_os == "Linux"
+  delegate_to: 10.0.3.2
+
+- name: "change {{ username }}'s password for Windows"
+  ansible.windows.win_user:
+    name: "{{username}}"
+    state: present
+    password: "{{ new_password | password_hash('sha512') }}"
+  when: target_os == "Windows"
+  delegate_to: 10.0.4.4

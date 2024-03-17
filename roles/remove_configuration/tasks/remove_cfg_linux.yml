@@ -6,13 +6,13 @@
     - snmp
     - snmpd
 
-- name: Linux remove Centreon configuration
+- name: Remove Centreon configuration
   centreon_host:
     url: "{{centreon_url}}"
     username: "{{centreon_api_user}}"
     password: "{{centreon_api_pass}}"
     name: "{{centreon_name}}"
     alias: "{{centreon_alias}}"
-    ipaddr: "{{ansible_host}}"
+    ipaddr: "{{centreon_alias}}"
     state: absent
-  delegate_to: Centreon
+  delegate_to: 10.0.4.2
