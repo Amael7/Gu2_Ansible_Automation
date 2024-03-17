@@ -1,4 +1,6 @@
 ---
 centreon_url: http://10.0.4.2/centreon
 centreon_api_user: "admin"
-centreon_api_pass: "centreon"
+centreon_api_pass: "Centreon!123"
+centreon_name: "{{'windows' if inventory_hostname in groups['Windows'] else 'linux'}}"
+centreon_alias: "{{'windows server' if inventory_hostname in groups['Windows'] else 'linux server'}}"

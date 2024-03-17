@@ -2,4 +2,4 @@
 
 - import_playbook: 20_centreon_supervision.yml
 
-- import_playbook: 30_password_gestion.yml
+  #- import_playbook: 30_password_gestion.yml
